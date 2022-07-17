@@ -1,18 +1,23 @@
 class Solution:
     def generateMatrix(self, n: int) -> List[List[int]]:
-        # append row and rotate solution
+        # walk matrix from outside in
         
-        # create empty matrix and decrementing counter
-        A, lo = [], n*n+1
+        # create empty matrix with appropriate dimensions
+        A = [[0]*n for i in range(n)]
         
-        # while decrementing counter isn't 0 yet
-        while lo > 1: 
+        # create index variables
+        i, j, di, dj = 0, 0, 0, 1
+        
+        # iterate through all numbers of n*n
+        for k in range(n*n):
+            A[i][j] = k + 1
             
-            # update counter ranges
-            lo, hi = lo - len(A), lo
+            # turn right if value ahead exists
+            if A[(i+di)%n][(j+dj)%n]: 
+                di, dj = dj, -di
             
-            # append row to CW rotated matrix
-            A = [list(range(lo, hi))] + list(zip(*A[::-1]))
+            # increment i, j accordingly
+            i += di
+            j += dj
         
         return A
-            
